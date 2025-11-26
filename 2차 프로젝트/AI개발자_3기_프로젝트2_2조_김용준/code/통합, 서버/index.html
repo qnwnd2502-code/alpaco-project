@@ -1,0 +1,168 @@
+<!-- templates/index.html (전체) -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Speech Fluency Evaluation</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Speech Fluency Evaluation</h1>
+
+    <!-- 1. 카테고리 + 키워드 -->
+    <section class="panel">
+        <h2>1. 카테고리와 키워드 선택</h2>
+        <div class="row">
+            <label for="categorySelect">Category</label>
+            <select id="categorySelect">
+                {% for c in categories %}
+                <option value="{{ c.id }}">{{ c.id }}. {{ c.label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="row">
+            <label for="keywordInput">Keyword</label>
+            <input type="text" id="keywordInput" placeholder="예: 프로젝트 발표, 자기소개">
+            <button id="btnGetQuestions">Get Questions</button>
+        </div>
+        <p id="keywordMsg" class="msg"></p>
+    </section>
+
+    <!-- 2. 질문 선택 -->
+    <section class="panel">
+        <h2>2. 질문 선택</h2>
+        <div id="qaList">
+            아직 질문이 로드되지 않았습니다.
+        </div>
+        <button id="btnExampleIntent" disabled>Generate Example Answer & Intent</button>
+        <p id="questionMsg" class="msg"></p>
+    </section>
+
+    <!-- 3. 예시 답변 + 질문 의도 -->
+    <section class="panel">
+        <h2>3. 예시 답변 & 질문 의도</h2>
+        <div class="subpanel">
+            <h3>예시 답변</h3>
+            <div id="exampleAnswerBox" class="sentence-box">
+                아직 예시 답변이 없습니다.
+            </div>
+        </div>
+        <div class="subpanel">
+            <h3>질문 의도</h3>
+            <div id="questionIntentBox" class="sentence-box">
+                아직 질문 의도가 없습니다.
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 첫 번째 발화 -->
+    <section class="panel">
+        <h2>4. 첫 번째 발화 (내 답변)</h2>
+        <div class="row">
+            <label for="usernameInput">Name</label>
+            <input type="text" id="usernameInput" placeholder="리더보드에 표시될 이름">
+        </div>
+
+        <h3>음성 녹음</h3>
+        <div class="row">
+            <button id="btnStartRec1">Start Recording</button>
+            <button id="btnStopRec1" disabled>Stop Recording</button>
+        </div>
+        <p id="recordStatus1" class="msg"></p>
+        <audio id="audioPreview1" controls style="display:none;"></audio>
+
+        <h3>또는 파일 업로드</h3>
+        <div class="row">
+            <input type="file" id="audioFileInput1" accept="audio/*">
+        </div>
+
+        <button id="btnSubmitFirst" disabled>Submit First Speech</button>
+        <p id="submitStatus1" class="msg"></p>
+    </section>
+
+    <!-- 5. 첫 번째 결과 -->
+    <section class="panel">
+        <h2>5. 첫 번째 결과</h2>
+        <div id="firstResultBox">
+            아직 첫 번째 평가 결과가 없습니다.
+        </div>
+
+        <div class="subpanel">
+            <h3>발화 요약</h3>
+            <div id="summaryBox" class="sentence-box">
+                아직 요약이 없습니다.
+            </div>
+        </div>
+        <div class="subpanel">
+            <h3>모범 답변</h3>
+            <div id="modelAnswerBox" class="sentence-box">
+                아직 모범 답변이 없습니다.
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 두 번째 발화 -->
+    <section class="panel">
+        <h2>6. 두 번째 발화 (모범답변 읽기)</h2>
+
+        <h3>음성 녹음</h3>
+        <div class="row">
+            <button id="btnStartRec2" disabled>Start Recording</button>
+            <button id="btnStopRec2" disabled>Stop Recording</button>
+        </div>
+        <p id="recordStatus2" class="msg"></p>
+        <audio id="audioPreview2" controls style="display:none;"></audio>
+
+        <h3>또는 파일 업로드</h3>
+        <div class="row">
+            <input type="file" id="audioFileInput2" accept="audio/*" disabled>
+        </div>
+
+        <button id="btnSubmitSecond" disabled>Submit Second Speech</button>
+        <p id="submitStatus2" class="msg"></p>
+
+        <div id="secondResultBox">
+            아직 두 번째 평가 결과가 없습니다.
+        </div>
+    </section>
+
+    <!-- 7. 리더보드 -->
+    <section class="panel">
+        <h2>7. Leaderboard (First Fluency)</h2>
+        <table id="leaderboardFirst">
+            <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Score</th>
+                <th>Category</th>
+                <th>Keyword</th>
+                <th>Time</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section class="panel">
+        <h2>8. Leaderboard (Second Fluency)</h2>
+        <table id="leaderboardSecond">
+            <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Score</th>
+                <th>Category</th>
+                <th>Keyword</th>
+                <th>Time</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
